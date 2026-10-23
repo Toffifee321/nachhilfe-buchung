@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titel %}Nachhilfe{% endblock %} – Nachhilfe</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% if g.user %}<script src="{{ url_for('static', filename='js/live.js') }}" defer></script>{% endif %}
+</head>
+<body{% if g.user %} data-poll-url="{{ url_for('api_benachrichtigungen') }}"{% endif %}>
+  <a class="skip" href="#inhalt">Zum Inhalt springen</a>
+  <header class="kopf">
+    <div class="kopf-innen">
+      <a class="logo" href="{{ url_for('start') }}">Nachhilfe</a>
+      <nav aria-label="Hauptnavigation">
+        <ul>
+        {% if g.user and g.user.rolle == 'lehrer' %}
+          <li><a href="{{ url_for('lehrer_termine') }}">Termine</a></li>
+          <li><a href="{{ url_for('lehrer_anfragen') }}">Posteingang
+            <span class="zaehler" id="zaehler" aria-live="polite"{% if not offene_anfragen %} hidden{% endif %}>{{ offene_anfragen }}</span></a></li>
+          <li><a href="{{ url_for('lehrer_schueler') }}">Schüler</a></li>
+        {% elif g.user %}
+          <li><a href="{{ url_for('termine') }}">Freie Termine</a></li>
+          <li><a href="{{ url_for('meine_buchungen') }}">Meine Buchungen</a></li>
+        {% else %}
+          <li><a href="{{ url_for('login') }}">Anmelden</a></li>
+          <li><a href="{{ url_for('registrieren') }}">Registrieren</a></li>
+        {% endif %}
+        {% if g.user %}
+          <li><a href="{{ url_for('passwort_aendern') }}">Passwort</a></li>
+          <li>
+            <form method="post" action="{{ url_for('logout') }}" class="inline">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <button type="submit" class="link">Abmelden</button>
+            </form>
+          </li>
+        {% endif %}
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhalt" class="seite">
+    {% with meldungen = get_flashed_messages(with_categories=true) %}
+      {% if meldungen %}
+      <div class="meldungen" role="status">
+        {% for kat, text in meldungen %}<p class="meldung {{ kat }}">{{ text }}</p>{% endfor %}
+      </div>
+      {% endif %}
+    {% endwith %}
+    {% block inhalt %}{% endblock %}
+  </main>
+
+  <footer class="fuss">
+    <a href="{{ url_for('datenschutz') }}">Datenschutz</a>
+    <a href="{{ url_for('impressum') }}">Impressum</a>
+  </footer>
+</body>
+</html>

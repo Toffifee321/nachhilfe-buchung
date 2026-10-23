@@ -1,0 +1,39 @@
+{% set namen = {'angefragt': 'angefragt', 'bestaetigt': 'bestätigt', 'abgelehnt': 'abgelehnt', 'zurueckgezogen': 'zurückgezogen'} %}
+{% if aktuell %}
+<ul class="karten">
+  {% for b in aktuell %}
+  <li class="karte">
+    <span class="marke s-{{ b.status }}">{{ namen[b.status] }}</span>
+    <p class="karte-datum">{{ b.start|datum }}</p>
+    <p class="karte-zeit">{{ b.start|zeitraum(b.dauer_min) }}</p>
+    <p class="karte-fach">{{ b.fach }}</p>
+    <p class="nebentext">bei {{ b.lehrer_name }}</p>
+    {% if b.nachricht %}<p class="zitat">{{ b.nachricht }}</p>{% endif %}
+    {% if b.status == 'angefragt' %}
+    <form method="post" action="{{ url_for('zurueckziehen', buchung_id=b.id) }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button type="submit" class="knopf zweit">Anfrage zurückziehen</button>
+    </form>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="leer">Sie haben keine aktuellen Buchungen. <a href="{{ url_for('termine') }}">Freie Termine ansehen</a></p>
+{% endif %}
+
+{% if verlauf %}
+<h2>Verlauf</h2>
+<ul class="karten ruhig">
+  {% for b in verlauf %}
+  <li class="karte">
+    <span class="marke s-{{ b.status }}">{{ namen[b.status] }}</span>
+    <p class="karte-datum">{{ b.start|datum }}</p>
+    <p class="karte-zeit">{{ b.start|zeitraum(b.dauer_min) }} · {{ b.fach }}</p>
+    {% if b.status == 'abgelehnt' and b.ablehnungsgrund %}
+    <p class="grund"><strong>Begründung:</strong> {{ b.ablehnungsgrund }}</p>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}

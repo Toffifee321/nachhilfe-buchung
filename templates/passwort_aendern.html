@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block titel %}Passwort ändern{% endblock %}
+{% block inhalt %}
+<section class="schmal">
+  <h1>Passwort ändern</h1>
+  {% if g.user.muss_passwort_aendern %}
+  <p class="hinweis">Der Lehrer hat Ihnen ein Startpasswort gesetzt. Bitte wählen Sie jetzt ein eigenes.</p>
+  {% endif %}
+  <form method="post" class="formular">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label for="alt">Aktuelles Passwort</label>
+    <input id="alt" name="alt" type="password" autocomplete="current-password" required autofocus>
+    <label for="neu">Neues Passwort</label>
+    <input id="neu" name="neu" type="password" minlength="10" autocomplete="new-password" required>
+    <label for="neu2">Neues Passwort wiederholen</label>
+    <input id="neu2" name="neu2" type="password" minlength="10" autocomplete="new-password" required>
+    <p class="nebentext">Mindestens 10 Zeichen.</p>
+    <button type="submit" class="knopf">Speichern</button>
+  </form>
+</section>
+{% endblock %}

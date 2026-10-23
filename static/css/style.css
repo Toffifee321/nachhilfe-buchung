@@ -1,0 +1,213 @@
+/* Nachhilfe – ruhige Old-Money-Palette. Keine externen Quellen, keine Verläufe. */
+:root {
+  --creme: #F6F1E7;
+  --karte: #FBF8F1;        /* etwas heller als der Hintergrund */
+  --gruen: #1F3A2E;
+  --marine: #1B2A41;
+  --bordeaux: #6B1F2A;
+  --gold: #B08D57;         /* nur für Linien und Hervorhebungen */
+  --taupe: #8C7F70;        /* Linien, dekorativ */
+  --taupe-text: #6B5F51;   /* Nebentext, erfüllt WCAG AA auf Creme */
+  --linie: #DDD3C0;
+  --gold-hell: #EFE3CC;
+  --gold-text: #5C4417;
+  --gruen-hell: #DCE6DF;
+  --bordeaux-hell: #F1DEDF;
+
+  --serif: Georgia, "Times New Roman", serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --radius: 6px;
+  --schatten: 0 1px 2px rgba(27, 42, 65, 0.06);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--creme);
+  color: var(--marine);
+  font: 1rem/1.6 var(--sans);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  color: var(--marine);
+  line-height: 1.25;
+}
+h1 { font-size: 1.9rem; margin: 0.5rem 0 1.25rem; letter-spacing: 0.01em; }
+h1::after {
+  content: "";
+  display: block;
+  width: 3rem;
+  height: 1px;
+  background: var(--gold);
+  margin-top: 0.75rem;
+}
+h2 { font-size: 1.3rem; margin: 2.25rem 0 0.75rem; }
+
+a { color: var(--gruen); text-underline-offset: 3px; }
+a:hover { color: var(--marine); }
+
+:focus-visible {
+  outline: 2px solid var(--marine);
+  outline-offset: 2px;
+}
+
+.skip {
+  position: absolute; left: -999px; top: 0;
+  background: var(--creme); color: var(--marine); padding: 0.5rem 1rem; z-index: 10;
+}
+.skip:focus { left: 0; }
+
+/* Kopfzeile */
+.kopf { background: var(--gruen); color: var(--creme); border-bottom: 1px solid var(--gold); }
+.kopf-innen {
+  max-width: 64rem; margin: 0 auto; padding: 0.9rem 1rem;
+  display: flex; flex-direction: column; gap: 0.5rem;
+}
+.logo {
+  font-family: var(--serif); font-size: 1.4rem; letter-spacing: 0.04em;
+  color: var(--creme); text-decoration: none;
+}
+.kopf nav ul {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 0.25rem 1.1rem; align-items: center;
+}
+.kopf a, .kopf button.link {
+  color: var(--creme); text-decoration: none; font-size: 0.95rem;
+  padding: 0.35rem 0; display: inline-block;
+  border-bottom: 1px solid transparent;
+}
+.kopf a:hover, .kopf button.link:hover { border-bottom-color: var(--gold); color: var(--creme); }
+.kopf :focus-visible { outline-color: var(--creme); }
+.logo:hover { border-bottom-color: transparent; }
+
+button.link {
+  background: none; border: 0; font: inherit; cursor: pointer; padding: 0;
+}
+form.inline { display: inline; margin: 0; }
+
+.zaehler {
+  display: inline-block; min-width: 1.4rem; padding: 0 0.4rem; margin-left: 0.25rem;
+  background: var(--creme); color: var(--gruen); border: 1px solid var(--gold);
+  border-radius: 1rem; font-size: 0.8rem; font-weight: 600; text-align: center; line-height: 1.35rem;
+}
+.zaehler[hidden] { display: none; }
+
+@media (min-width: 40rem) {
+  .kopf-innen { flex-direction: row; justify-content: space-between; align-items: center; }
+}
+
+/* Inhalt */
+.seite { flex: 1; width: 100%; max-width: 64rem; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+.schmal { max-width: 26rem; }
+.text { max-width: 40rem; }
+
+.nebentext { color: var(--taupe-text); font-size: 0.9rem; margin: 0.25rem 0 0.75rem; }
+.leer { color: var(--taupe-text); padding: 2rem 0; border-top: 1px solid var(--linie); }
+
+.meldungen { margin-bottom: 1.25rem; }
+.meldung {
+  margin: 0 0 0.5rem; padding: 0.7rem 1rem; border-radius: var(--radius);
+  background: var(--karte); border: 1px solid var(--linie); border-left: 3px solid var(--gold);
+}
+.meldung.ok { border-left-color: var(--gruen); }
+.meldung.fehler { border-left-color: var(--bordeaux); color: var(--bordeaux); }
+.hinweis {
+  padding: 0.7rem 1rem; background: var(--gold-hell); color: var(--gold-text);
+  border-radius: var(--radius); border: 1px solid var(--gold);
+}
+
+/* Formulare */
+.formular label { display: block; font-size: 0.9rem; margin: 1rem 0 0.3rem; }
+.formular input, .formular textarea, .formular select {
+  width: 100%; font: inherit; color: var(--marine);
+  background: #fff; border: 1px solid var(--taupe); border-radius: var(--radius);
+  padding: 0.6rem 0.75rem; min-height: 2.75rem;
+}
+.formular textarea { resize: vertical; }
+.formular input:focus-visible, .formular textarea:focus-visible {
+  outline: 2px solid var(--marine); outline-offset: 1px; border-color: var(--marine);
+}
+.formular > .knopf, .formular > .knopfreihe, .formular > div > .knopf { margin-top: 1.25rem; }
+.knopfreihe { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.knopfreihe .knopf { margin-top: 0; }
+
+.raster { display: grid; gap: 0 1rem; grid-template-columns: 1fr; align-items: end; }
+@media (min-width: 40rem) { .raster { grid-template-columns: repeat(4, 1fr); } .raster > div:last-child { grid-column: 1 / -1; } }
+
+/* Knöpfe */
+.knopf {
+  display: inline-block; font: inherit; font-size: 0.95rem; cursor: pointer;
+  background: var(--gruen); color: var(--creme); text-decoration: none; text-align: center;
+  border: 1px solid var(--gruen); border-radius: var(--radius);
+  padding: 0.6rem 1.2rem; min-height: 2.75rem; line-height: 1.4;
+}
+.knopf:hover { background: #172D23; color: var(--creme); }
+.knopf.zweit { background: transparent; color: var(--gruen); border-color: var(--gruen); }
+.knopf.zweit:hover { background: var(--gruen-hell); color: var(--gruen); }
+.knopf.gefahr { background: var(--bordeaux); border-color: var(--bordeaux); }
+.knopf.gefahr:hover { background: #561823; }
+
+/* Karten */
+.karten {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: 1rem; grid-template-columns: 1fr;
+}
+@media (min-width: 40rem) { .karten { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 60rem) { .karten { grid-template-columns: repeat(3, 1fr); } }
+
+.karte {
+  position: relative;
+  background: var(--karte); border: 1px solid var(--linie); border-top: 1px solid var(--gold);
+  border-radius: var(--radius); box-shadow: var(--schatten); padding: 1.1rem 1.1rem 1.25rem;
+}
+.karte form { margin-top: 0.9rem; }
+.karte > .knopf { margin-top: 0.9rem; }
+.karte p { margin: 0; }
+.karte-datum { font-family: var(--serif); font-size: 1.25rem; padding-right: 6.5rem; }
+.karte-zeit { color: var(--taupe-text); font-size: 0.95rem; }
+.karte-fach { margin-top: 0.5rem !important; font-weight: 600; }
+.karte .nebentext { margin: 0.1rem 0 0; }
+.zitat {
+  margin-top: 0.75rem !important; padding-left: 0.75rem; border-left: 1px solid var(--gold);
+  color: var(--marine); font-style: italic; white-space: pre-wrap; overflow-wrap: anywhere;
+}
+.grund { margin-top: 0.6rem !important; color: var(--bordeaux); font-size: 0.95rem; }
+.ruhig .karte { background: transparent; box-shadow: none; }
+.ablehnen { border-top: 1px solid var(--linie); padding-top: 0.2rem; }
+.ablehnen label { margin-top: 0.5rem; }
+.ablehnen .knopf { margin-top: 0.75rem; }
+
+/* Statusmarken: Text immer dunkel auf hellem Grund (AA) */
+.marke {
+  position: absolute; top: 1rem; right: 1rem;
+  font-size: 0.75rem; letter-spacing: 0.04em; text-transform: uppercase;
+  padding: 0.15rem 0.6rem; border-radius: 1rem; border: 1px solid; line-height: 1.5;
+}
+.s-angefragt { background: var(--gold-hell); color: var(--gold-text); border-color: var(--gold); }
+.s-bestaetigt { background: var(--gruen-hell); color: var(--gruen); border-color: var(--gruen); }
+.s-abgelehnt { background: var(--bordeaux-hell); color: var(--bordeaux); border-color: var(--bordeaux); }
+.s-frei, .s-zurueckgezogen { background: transparent; color: var(--taupe-text); border-color: var(--taupe); }
+
+/* Platzhalter für eigene Rechtstexte: absichtlich auffällig */
+.platzhalter {
+  margin: 2rem 0; padding: 1rem 1.25rem; border: 2px dashed var(--bordeaux);
+  background: var(--bordeaux-hell); color: var(--bordeaux); border-radius: var(--radius);
+}
+
+/* Fußzeile */
+.fuss {
+  border-top: 1px solid var(--gold); padding: 1.25rem 1rem; text-align: center;
+  font-size: 0.9rem; display: flex; gap: 1.5rem; justify-content: center;
+}
+.fuss a { color: var(--taupe-text); }
+.fuss a:hover { color: var(--marine); }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }

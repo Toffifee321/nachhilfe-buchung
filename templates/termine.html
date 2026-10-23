@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block titel %}Freie Termine{% endblock %}
+{% block inhalt %}
+<h1>Freie Termine</h1>
+{% if termine %}
+<ul class="karten">
+  {% for t in termine %}
+  <li class="karte">
+    <p class="karte-datum">{{ t.start|datum }}</p>
+    <p class="karte-zeit">{{ t.start|zeitraum(t.dauer_min) }} · {{ t.dauer_min }} Min.</p>
+    <p class="karte-fach">{{ t.fach }}</p>
+    <p class="nebentext">bei {{ t.lehrer_name }}</p>
+    <a class="knopf" href="{{ url_for('buchen', termin_id=t.id) }}">Anfragen</a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="leer">Zurzeit sind keine freien Termine eingetragen. Schauen Sie später wieder vorbei.</p>
+{% endif %}
+{% endblock %}

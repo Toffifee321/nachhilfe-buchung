@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block titel %}Meine Buchungen{% endblock %}
+{% block inhalt %}
+<h1>Meine Buchungen</h1>
+<p class="nebentext">Diese Liste aktualisiert sich automatisch alle 15 Sekunden.</p>
+<div id="live">{% include "_buchungen.html" %}</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block titel %}Datenschutz{% endblock %}
+{% block inhalt %}
+<section class="text">
+  <h1>Datenschutz</h1>
+  <h2>Welche Daten werden gespeichert?</h2>
+  <ul>
+    <li><strong>Name und E-Mail-Adresse</strong>, damit Sie ein Konto haben und der Lehrer weiß, wer einen Termin anfragt.</li>
+    <li><strong>Passwort</strong> ausschließlich als nicht umkehrbarer Hash, nie im Klartext.</li>
+    <li><strong>Buchungen</strong> (gewählter Termin, Ihre Nachricht, Status, gegebenenfalls Begründung einer Ablehnung), um die Nachhilfestunden zu organisieren.</li>
+  </ul>
+  <p>Es werden keine Daten an Dritte weitergegeben und keine externen Dienste, Schriften oder Tracker eingebunden. Technisch notwendig ist ein Sitzungs-Cookie für die Anmeldung.</p>
+  <h2>Minderjährige</h2>
+  <p>Wenn Sie minderjährig sind, ist für die Nutzung dieser Seite die Zustimmung Ihrer Eltern beziehungsweise Erziehungsberechtigten nötig.</p>
+  <div class="platzhalter" role="note">
+    <strong>NOCH AUSZUFÜLLEN:</strong> Hier den rechtlich verbindlichen Datenschutztext eintragen
+    (Verantwortlicher, Rechtsgrundlage, Speicherdauer, Betroffenenrechte, Kontakt).
+    Datei: <code>templates/datenschutz.html</code>
+  </div>
+</section>
+{% endblock %}

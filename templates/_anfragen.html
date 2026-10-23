@@ -1,0 +1,25 @@
+{% if anfragen %}
+<ul class="karten">
+  {% for a in anfragen %}
+  <li class="karte">
+    <span class="marke s-angefragt">angefragt</span>
+    <p class="karte-datum">{{ a.start|datum }}</p>
+    <p class="karte-zeit">{{ a.start|zeitraum(a.dauer_min) }} · {{ a.fach }}</p>
+    <p><strong>{{ a.schueler_name }}</strong> <span class="nebentext">· angefragt am {{ a.erstellt_am|zeitpunkt }}</span></p>
+    {% if a.nachricht %}<p class="zitat">{{ a.nachricht }}</p>{% endif %}
+    <form method="post" action="{{ url_for('bestaetigen', buchung_id=a.id) }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button type="submit" class="knopf">Bestätigen</button>
+    </form>
+    <form method="post" action="{{ url_for('ablehnen', buchung_id=a.id) }}" class="formular ablehnen">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label for="grund-{{ a.id }}">Begründung bei Ablehnung</label>
+      <input id="grund-{{ a.id }}" name="grund" maxlength="300" required>
+      <button type="submit" class="knopf gefahr">Ablehnen</button>
+    </form>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="leer">Keine offenen Anfragen.</p>
+{% endif %}

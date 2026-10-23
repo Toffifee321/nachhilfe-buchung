@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block titel %}Anmelden{% endblock %}
+{% block inhalt %}
+<section class="schmal">
+  <h1>Anmelden</h1>
+  <form method="post" class="formular">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label for="email">E-Mail</label>
+    <input id="email" name="email" type="email" value="{{ email }}" autocomplete="username" required autofocus>
+    <label for="passwort">Passwort</label>
+    <input id="passwort" name="passwort" type="password" autocomplete="current-password" required>
+    <button type="submit" class="knopf">Anmelden</button>
+  </form>
+  <p class="nebentext">Noch kein Konto? <a href="{{ url_for('registrieren') }}">Jetzt registrieren</a>.
+  Passwort vergessen? Bitte beim Lehrer ein neues Startpasswort anfragen.</p>
+</section>
+{% endblock %}

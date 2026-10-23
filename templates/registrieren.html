@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block titel %}Registrieren{% endblock %}
+{% block inhalt %}
+<section class="schmal">
+  <h1>Registrieren</h1>
+  <form method="post" class="formular">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label for="name">Name</label>
+    <input id="name" name="name" value="{{ name }}" maxlength="100" autocomplete="name" required autofocus>
+    <label for="email">E-Mail</label>
+    <input id="email" name="email" type="email" value="{{ email }}" maxlength="254" autocomplete="username" required>
+    <label for="passwort">Passwort</label>
+    <input id="passwort" name="passwort" type="password" minlength="10" autocomplete="new-password" aria-describedby="pw-hinweis" required>
+    <p class="nebentext" id="pw-hinweis">Mindestens 10 Zeichen.</p>
+    <p class="nebentext">Mit der Registrierung stimmen Sie der Speicherung Ihrer Daten laut <a href="{{ url_for('datenschutz') }}">Datenschutz</a> zu. Bei Minderjährigen ist die Zustimmung der Eltern nötig.</p>
+    <button type="submit" class="knopf">Konto anlegen</button>
+  </form>
+  <p class="nebentext">Schon registriert? <a href="{{ url_for('login') }}">Anmelden</a></p>
+</section>
+{% endblock %}

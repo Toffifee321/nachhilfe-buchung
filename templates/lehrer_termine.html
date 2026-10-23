@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block titel %}Termine verwalten{% endblock %}
+{% block inhalt %}
+<h1>Termine</h1>
+<section aria-labelledby="neu-titel">
+  <h2 id="neu-titel">Freien Termin anlegen</h2>
+  <form method="post" class="formular raster">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div><label for="datum">Datum</label>
+      <input id="datum" name="datum" type="date" value="{{ w.datum }}" required></div>
+    <div><label for="zeit">Uhrzeit</label>
+      <input id="zeit" name="zeit" type="time" value="{{ w.zeit }}" required></div>
+    <div><label for="dauer">Dauer (Minuten)</label>
+      <input id="dauer" name="dauer" type="number" min="15" max="240" step="5" value="{{ w.dauer }}" required></div>
+    <div><label for="fach">Fach</label>
+      <input id="fach" name="fach" maxlength="60" value="{{ w.fach }}" required></div>
+    <div><button type="submit" class="knopf">Termin anlegen</button></div>
+  </form>
+</section>
+
+<h2>Kommende Termine</h2>
+{% if termine %}
+<ul class="karten">
+  {% for t in termine %}
+  <li class="karte">
+    <span class="marke s-{{ t.status }}">{{ {'frei': 'frei', 'angefragt': 'angefragt', 'bestaetigt': 'bestätigt'}[t.status] }}</span>
+    <p class="karte-datum">{{ t.start|datum }}</p>
+    <p class="karte-zeit">{{ t.start|zeitraum(t.dauer_min) }} · {{ t.dauer_min }} Min.</p>
+    <p class="karte-fach">{{ t.fach }}</p>
+    {% if t.schueler_name %}<p class="nebentext">{{ t.schueler_name }}</p>{% endif %}
+    {% if t.status == 'frei' %}
+    <form method="post" action="{{ url_for('termin_loeschen', termin_id=t.id) }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button type="submit" class="knopf zweit">Löschen</button>
+    </form>
+    {% elif t.status == 'angefragt' %}
+    <a class="knopf zweit" href="{{ url_for('lehrer_anfragen') }}">Im Posteingang bearbeiten</a>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="leer">Noch keine kommenden Termine.</p>
+{% endif %}
+{% endblock %}

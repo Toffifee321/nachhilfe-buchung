@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block titel %}Schüler{% endblock %}
+{% block inhalt %}
+<h1>Schüler</h1>
+<p class="nebentext">Passwort vergessen? Setzen Sie hier ein neues Startpasswort und geben Sie es dem Schüler persönlich weiter. Der Schüler muss es beim nächsten Login ändern.</p>
+{% if schueler %}
+<ul class="karten">
+  {% for s in schueler %}
+  <li class="karte">
+    <p class="karte-fach">{{ s.name }}</p>
+    <p class="nebentext">{{ s.email }}</p>
+    <form method="post" action="{{ url_for('startpasswort_setzen', nutzer_id=s.id) }}" class="formular">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label for="pw-{{ s.id }}">Neues Startpasswort (mind. 10 Zeichen)</label>
+      <input id="pw-{{ s.id }}" name="passwort" type="text" minlength="10" autocomplete="off" required>
+      <button type="submit" class="knopf zweit">Startpasswort setzen</button>
+    </form>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="leer">Noch keine Schüler registriert.</p>
+{% endif %}
+{% endblock %}

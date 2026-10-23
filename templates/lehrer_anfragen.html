@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block titel %}Posteingang{% endblock %}
+{% block inhalt %}
+<h1>Posteingang</h1>
+<p class="nebentext">Diese Liste aktualisiert sich automatisch alle 15 Sekunden.</p>
+<div id="live">{% include "_anfragen.html" %}</div>
+{% endblock %}

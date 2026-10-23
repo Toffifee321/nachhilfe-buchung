@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block titel %}Termin anfragen{% endblock %}
+{% block inhalt %}
+<section class="schmal">
+  <h1>Termin anfragen</h1>
+  <div class="karte">
+    <p class="karte-datum">{{ t.start|datum }}</p>
+    <p class="karte-zeit">{{ t.start|zeitraum(t.dauer_min) }} · {{ t.dauer_min }} Min.</p>
+    <p class="karte-fach">{{ t.fach }}</p>
+    <p class="nebentext">bei {{ t.lehrer_name }}</p>
+  </div>
+  <form method="post" class="formular">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label for="nachricht">Nachricht (optional, zum Beispiel das Thema)</label>
+    <textarea id="nachricht" name="nachricht" rows="4" maxlength="500">{{ nachricht }}</textarea>
+    <div class="knopfreihe">
+      <button type="submit" class="knopf">Verbindlich anfragen</button>
+      <a class="knopf zweit" href="{{ url_for('termine') }}">Abbrechen</a>
+    </div>
+  </form>
+</section>
+{% endblock %}
